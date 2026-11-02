@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Open Source Job Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="utility-bar"><span>OpenHire Job Portal</span><div><a href="{{ url_for('index') }}">My Cart</a><a href="{{ url_for('login') }}">Login / Register</a><a href="{{ url_for('index') }}">Help</a></div></div>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('index') }}">OpenHire</a>
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('index') }}">Browse Jobs</a>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('new_job') }}">Post a Job</a>
+      <a href="{{ url_for('my_applications') }}">My Applications</a>
+      <span class="welcome">Hi, {{ session.get('user_name') }}</span>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="messages">{% for message in messages %}<p>{{ message }}</p>{% endfor %}</div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>OpenHire · Python Flask Job Portal</footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Post a Job · OpenHire{% endblock %}
+{% block content %}
+<div class="form-card wide">
+  <h1>Post a job</h1><p>Share an opportunity with job seekers.</p>
+  <form method="post">
+    <label>Job title</label><input name="title" required>
+    <label>Company</label><input name="company" required>
+    <label>Location</label><input name="location" placeholder="e.g. Chennai / Remote" required>
+    <label>Job type</label>
+    <select name="job_type" required>
+      <option value="">Choose job type</option><option>Full-time</option><option>Part-time</option><option>Internship</option><option>Contract</option>
+    </select>
+    <label>Description</label><textarea name="description" rows="5" required></textarea>
+    <button type="submit">Publish job</button>
+  </form>
+</div>
+{% endblock %}

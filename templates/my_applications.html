@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}My Applications · OpenHire{% endblock %}
+{% block content %}
+<h1>My applications</h1>
+<div class="job-list">
+{% for item in applications %}
+  <article class="job-card">
+    <div class="job-info">
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.company }} · {{ item.location }}</p>
+      <span class="muted">Applied: {{ item.applied_at }}</span>
+      <p>{{ item.message }}</p>
+    </div>
+  </article>
+{% else %}
+  <div class="empty">You have not applied for any jobs yet.</div>
+{% endfor %}
+</div>
+{% endblock %}

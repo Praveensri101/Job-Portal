@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="portal-heading">
+  <h1>JOB PORTAL</h1>
+  <p>Brought To You By <strong>code-projects.org</strong></p>
+</section>
+
+<div class="portal-nav">
+  <a href="{{ url_for('index') }}">Resume Forward</a>
+  <a href="{{ url_for('index') }}">Resume Writing</a>
+  <a href="{{ url_for('index') }}">Job Seeker</a>
+  <a href="{{ url_for('index') }}">Career Report</a>
+  <a href="{{ url_for('index') }}">Profile Verification</a>
+  <a href="{{ url_for('index') }}">Growth Combo</a>
+  <a href="{{ url_for('login') }}">Login</a>
+</div>
+
+<section class="portal-columns">
+  <aside class="portal-panel login-panel">
+    <h2>New User</h2>
+    {% if session.get('user_id') %}
+      <p class="signed-in">Welcome, {{ session.get('user_name') }}!</p>
+      <a class="portal-action" href="{{ url_for('my_applications') }}">My Applications</a>
+      <a class="portal-action light" href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <form method="post" action="{{ url_for('login') }}">
+        <label>Your Email ID</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <label>Your Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+      </form>
+      <a class="small-link" href="{{ url_for('register') }}">Create An Account</a>
+      <a class="small-link" href="{{ url_for('register') }}">Forgot Password</a>
+    {% endif %}
+  </aside>
+
+  <section class="portal-panel employers-panel">
+    <h2>Top Employers</h2>
+    <div class="employer-columns">
+      <ul>
+        <li>Infosys</li><li>Wipro</li><li>Tech Mahindra</li><li>HCL Technologies</li>
+        <li>Capgemini</li><li>Accenture</li><li>Cognizant</li><li>IBM</li>
+      </ul>
+      <ul>
+        <li>Tata Consultancy Services</li><li>Oracle</li><li>Microsoft</li><li>Amazon</li>
+        <li>Zoho</li><li>Freshworks</li><li>LTIMindtree</li><li>Google</li>
+      </ul>
+    </div>
+  </section>
+
+  <aside class="portal-panel companies-panel">
+    <h2>Top MNC Companies</h2>
+    <div class="company-grid">
+      <span class="logo-box red">HCL</span><span class="logo-box blue">IBM</span><span class="logo-box teal">CITI</span>
+      <span class="logo-box orange">HAVELLS</span><span class="logo-box green">WIPRO</span><span class="logo-box navy">TCS</span>
+      <span class="logo-box dark">accenture</span><span class="logo-box blue">Infosys</span><span class="logo-box red">AIRCEL</span>
+    </div>
+  </aside>
+</section>
+
+<section class="jobs-below">
+  <div class="jobs-title">
+    <div><h2>Latest Job Opportunities</h2><p>Search available openings</p></div>
+    <a class="portal-action" href="{{ url_for('new_job') }}">Post a Job</a>
+  </div>
+  <form class="job-search" method="get" action="{{ url_for('index') }}">
+    <input name="q" value="{{ keyword }}" placeholder="Search by job title, company, or location">
+    <button type="submit">Search Jobs</button>
+  </form>
+  <div class="job-results">
+    {% for job in jobs %}
+      <article class="job-result">
+        <div><h3><a href="{{ url_for('job_detail', job_id=job.id) }}">{{ job.title }}</a></h3>
+        <p>{{ job.company }} · {{ job.location }} · {{ job.job_type }}</p></div>
+        <a class="view-link" href="{{ url_for('job_detail', job_id=job.id) }}">View</a>
+      </article>
+    {% else %}
+      <p class="no-jobs">No jobs found.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
