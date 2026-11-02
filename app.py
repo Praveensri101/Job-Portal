@@ -4,7 +4,8 @@ import sqlite3
 from pathlib import Path
 
 app = Flask(__name__)
-app.secret_key = "change-this-secret-key-before-deployment"
+import os
+app.secret_key = os.environ.get("SECRET_KEY", "dev-key-change-before-deployment")
 DB_PATH = Path(__file__).with_name("job_portal.db")
 
 
@@ -202,6 +203,7 @@ def my_applications():
     return render_template("my_applications.html", applications=applications)
 
 
+init_db()
+
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
